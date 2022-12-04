@@ -1,12 +1,13 @@
 const createCountryElement = (countryData, list) => {
+  list.clearChildren;
   const name = document.createElement("li");
+
   name.innerText = countryData.name.common;
   name.classList.add("country");
   list.appendChild(name);
   const capital = document.createElement("span");
   let capitalsDisplayed;
   countryData.capital.forEach((capital, index) => {
-    console.log(capital);
     if (index > 0) {
       capitalsDisplayed = capitalsDisplayed + ", " + capital;
     } else {
@@ -34,7 +35,11 @@ const createCountryElement = (countryData, list) => {
   name.appendChild(languages);
 };
 export const createDisplay = (countriesData) => {
-  const listContainer = document.querySelector(".listContainer");
+  const previousList = document.querySelector("ul");
+  if (previousList !== null) {
+    previousList.remove();
+  }
+  const listContainer = document.querySelector(".list-container");
   const countryList = document.createElement("ul");
   listContainer.appendChild(countryList);
   function comparePopulation(firstCountry, secondCountry) {
@@ -42,7 +47,6 @@ export const createDisplay = (countriesData) => {
     return secondCountry.population - firstCountry.population;
   }
   const countriesSorted = countriesData.sort(comparePopulation);
-  console.log(countriesSorted);
   countriesSorted.forEach((singleCountryData) => {
     createCountryElement(singleCountryData, countryList);
   });

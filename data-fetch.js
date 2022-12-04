@@ -15,28 +15,27 @@ const checkDuplicates = (array) => {
   return sameAdress;
 };
 async function fetchFirstData(secondAPIAdresses, amount) {
-  const firstAPIURL = `https://random-data-api.com/api/v2/addresses?size=${amount}&is_json=true`;
+  const firstAPIURL = `https://random-data-api.com/api/v2/addresses?size=30&is_json=true`; //I fetch more data cuz not every country matches
   return new Promise((resolve) => {
     fetch(firstAPIURL)
       .then((res) => res.json())
       .then(async (adresses) => {
-        if (checkDuplicates(adresses)) {
-          fetchfirstData(secondAPIAdresses, amount);
-        } else {
-          let countryInfo = [];
-          if (Array.isArray(adresses)) {
-            let fetchedAdresses = [];
-            fetchedAdresses = [...adresses];
-            countryNames = fetchedAdresses.map((country) => country.country);
-            countryInfo = secondAPIAdresses.filter((country) =>
-              countryNames.includes(country.name.common)
-            );
-            //here i check if countries matches (some countries hava different names in both APIs)
-            if (countryInfo.length !== countryNames.length) {
-              displayData(amount);
-            } else {
-              resolve(countryInfo);
-            }
+        console.log(adresses);
+        let countryInfo = [];
+        if (Array.isArray(adresses)) {
+          let fetchedAdresses = [];
+          fetchedAdresses = [...adresses];
+          countryNames = fetchedAdresses.map((country) => country.country);
+          countryInfo = secondAPIAdresses.filter((country) =>
+            countryNames.includes(country.name.common)
+          );
+
+          countryInfo = countryInfo.splice(0, amount);
+          //here i check if countries matches (some countries have different names in both APIs)
+          if (countryInfo.length == amount && !checkDuplicates(adresses)) {
+            resolve(countryInfo);
+          } else {
+            displayData(amount);
           }
         }
       });
