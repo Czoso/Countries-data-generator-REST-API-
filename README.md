@@ -8,7 +8,7 @@ As a creator of this project i'd like to introduce you to my small activation gu
   c) git remote add origin https://github.com/Czoso/Countries-data-generator-REST-API-.git
   d) git pull origin master
  
-At this point this project should take place on your computer. To run it you need to do following steps (those steps are necessary because proejct uses modules type in script tag):
+At this point this project should take place on your computer. To run it you need to do following steps (those steps are necessary because project uses modules type in script tag):
  1. Download "Live Server" extension in your app
  2. Right-click on the typing area and choose "Open with Live Server" option.
 
