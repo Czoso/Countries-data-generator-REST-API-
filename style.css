@@ -30,7 +30,7 @@ h1 {
   background-color: #b00;
 }
 .list-container {
-  width: 80%;
+  width: 100%;
 }
 .country {
   display: flex;
@@ -46,5 +46,5 @@ h1 {
   flex-basis: 25%;
 }
 .country__languages {
-  flex-basis: 25%;
+  flex-basis: 30%;
 }
