@@ -1,34 +1,43 @@
 const createCountryElement = (countryData, list) => {
   list.clearChildren;
   const name = document.createElement("li");
-
-  name.innerText = countryData.name.common;
+  countryData.name.common
+    ? (name.innerText = countryData.name.common)
+    : (name.innerText = "No information found!");
   name.classList.add("country");
   list.appendChild(name);
   const capital = document.createElement("span");
   let capitalsDisplayed;
-  countryData.capital.forEach((capital, index) => {
-    if (index > 0) {
-      capitalsDisplayed = capitalsDisplayed + ", " + capital;
-    } else {
-      capitalsDisplayed = capital;
-    }
-  });
+  if (countryData.capital[0]) {
+    countryData.capital.forEach((capital, index) => {
+      if (index > 0) {
+        capitalsDisplayed = capitalsDisplayed + ", " + capital;
+      } else {
+        capitalsDisplayed = capital;
+      }
+    });
+  } else {
+    capitalsDisplayed = "No information found!";
+  }
   capital.innerText = `Capital(s): ${capitalsDisplayed}`;
   capital.classList.add("country__capital");
   name.appendChild(capital);
-
   const population = document.createElement("span");
-  population.innerText = `Pupulation: ${countryData.population}`;
+  countryData.population
+    ? (population.innerText = `Pupulation: ${countryData.population}`)
+    : (population.innerText = `Population: No information found!`);
   population.classList.add("country__population");
   name.appendChild(population);
-
   const languages = document.createElement("span");
   let languagesText;
-  for (const key of Object.keys(countryData.languages)) {
-    languagesText == undefined
-      ? (languagesText = countryData.languages[key])
-      : (languagesText = `${languagesText}, ${countryData.languages[key]}`);
+  if (Object.keys(countryData.languages)[0]) {
+    for (const key of Object.keys(countryData.languages)) {
+      languagesText == undefined
+        ? (languagesText = countryData.languages[key])
+        : (languagesText = `${languagesText}, ${countryData.languages[key]}`);
+    }
+  } else {
+    languagesText = "No information found!";
   }
   languages.innerText = languagesText;
   languages.classList.add("country__languages");
