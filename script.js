@@ -1,11 +1,12 @@
 import { fetchSecondData } from "./data-fetch.js";
+import { createDisplay } from "./dom-utils.js";
 import { inputValidation } from "./validation.js";
 
 const amountInput = document.querySelector("input.user-amount-input");
 const submitButton = document.querySelector(".submit");
 export const displayData = (value) => {
   fetchSecondData(value).then((countriesData) => {
-    console.log(countriesData);
+    createDisplay(countriesData);
   });
 };
 submitButton.addEventListener("click", () => {

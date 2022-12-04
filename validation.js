@@ -1,3 +1,7 @@
 export const inputValidation = (value) => {
-  return value >= 5 ? true : false;
+  if (value >= 5 && value <= 20) {
+    return true;
+  } else {
+    return false;
+  }
 };
