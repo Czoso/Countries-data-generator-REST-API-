@@ -16,24 +16,35 @@ const checkDuplicates = (array) => {
   });
   return sameAdress;
 };
-fetch(firstAPIURL)
-  .then((res) => res.json())
-  .then((adresses) => {
-    if (checkDuplicates(adresses)) {
-    } else {
-      if (Array.isArray(adresses)) {
-        fetchedAdresses = [...adresses];
-        countryNames = fetchedAdresses.map((country) => country.country);
-        const secondAPIURL = `https://restcountries.com/v3.1/all?fields=name,capital,currencies`; //I decided to fetch all and then filter information so i do not create fetch for every single country
-        fetch(secondAPIURL)
-          .then((res) => res.json())
-          .then((countries) => {
-            countries.sort();
-
-            countryInfo = countries.filter((country) =>
-              countryNames.includes(country.name.common)
-            );
-          });
+const fetchfirstData = (secondAPIAdresses) => {
+  fetch(firstAPIURL)
+    .then((res) => res.json())
+    .then((adresses) => {
+      if (checkDuplicates(adresses)) {
+        fetchfirstData(secondAPIAdresses);
+      } else {
+        if (Array.isArray(adresses)) {
+          fetchedAdresses = [...adresses];
+          countryNames = fetchedAdresses.map((country) => country.country);
+          countryInfo = secondAPIAdresses.filter((country) =>
+            countryNames.includes(country.name.common)
+          );
+          //here i check if countries matches (some countries hava different names in both APIs)
+          if (countryInfo.length !== countryNames.length) {
+            fetchfirstData(secondAPIAdresses);
+          } else {
+            return countryInfo;
+          }
+        }
       }
-    }
-  });
+    });
+};
+const fetchSecondData = () => {
+  const secondAPIURL = `https://restcountries.com/v3.1/all?fields=name,capital,currencies`; //I decided to fetch all and then filter information so i do not create fetch for every single country
+  fetch(secondAPIURL)
+    .then((res) => res.json())
+    .then((countries) => {
+      fetchfirstData(countries);
+    });
+};
+fetchSecondData();
